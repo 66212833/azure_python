@@ -5,11 +5,11 @@ import copy
 
 # Configurações
 subscription_id = 'cd53d955-4364-4c85-9159-662daadf6c80'
-resource_group = 'centric-dev-rg'
+resource_group = 'centric-qua-rg'
 #listagem de LA que deseja inserir novos IPS
-listLogicAppName = ['Centric.Hypercare.CardUpsert.Reprocess'] 
+listLogicAppName = ['Centric.CreditRisk.UpsertData'] 
 # Listagem de IP que quer permitir
-listIpCsv = ['40.50.70.78/32', '40.50.70.79/32', '40.50.70.80/32']  
+listIpCsv = ["4.175.0.0/16", "4.180.0.0/16", "4.210.128.0/17"]  
 currentList = []
 
 # Replace this with your required scope
@@ -55,6 +55,15 @@ for logic_app_name in listLogicAppName:
                     'definition': logic_app.definition,
                     'tags': logic_app.tags
                 }
+
+                if logic_app.parameters:
+                    workflow_params = {
+                        'location': logic_app.location,
+                        'access_control': new_definition,
+                        'definition': logic_app.definition,
+                        'parameters': logic_app.parameters,
+                        'tags': logic_app.tags
+                    }
 
                 # Faz a atualização (replace)
                 client.workflows.create_or_update(resource_group, logic_app_name, workflow_params)
