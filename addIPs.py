@@ -47,20 +47,22 @@ for logic_app_name in listLogicAppName:
                 }
                 allowed_ips.append(newIp)
 
-        if finalList:
-            # Atualiza a definição da Logic App
-            workflow_params = {
-                'location': logic_app.location,
-                'access_control': new_definition,
-                'definition': logic_app.definition,
-                'tags': logic_app.tags
-            }
+            if finalList:
+                # Atualiza a definição da Logic App
+                workflow_params = {
+                    'location': logic_app.location,
+                    'access_control': new_definition,
+                    'definition': logic_app.definition,
+                    'tags': logic_app.tags
+                }
 
-            # Faz a atualização (replace)
-            client.workflows.create_or_update(resource_group, logic_app_name, workflow_params)
+                # Faz a atualização (replace)
+                client.workflows.create_or_update(resource_group, logic_app_name, workflow_params)
 
-            print(f"IP {finalList} adicionado em Logic App {logic_app_name}")
+                print(f"IP {finalList} adicionado em Logic App {logic_app_name}")
+            else:
+                print(f"Nenhum IP foi adicionado. Todos os IPs da listagem já existem Logic App {logic_app_name}")
         else:
-            print(f"Nenhum IP foi adicionado. Todos os IPs da listagem já existem Logic App {logic_app_name}")
+            print(f"A Logic App {logic_app_name} nao possui restricoes de IP")
     else:
         print(f"Logic App {logic_app_name} nao possui restricao de ip")
