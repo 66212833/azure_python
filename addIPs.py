@@ -1,4 +1,3 @@
-from azure.identity import DefaultAzureCredential
 from azure.mgmt.logic import LogicManagementClient
 from azure.identity import InteractiveBrowserCredential
 import copy
